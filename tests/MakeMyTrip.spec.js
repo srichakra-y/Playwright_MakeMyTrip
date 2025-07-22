@@ -81,6 +81,9 @@ test.describe('Basic Functionality', async() => {
         const saudipage = new SaudiPage(newPage1);
         await saudipage.validatingIconsSaudi();
     })
+    test.only("sample",async()=>{
+        console.log("raju created test");
+    })
 })
 
 test.describe('Cabs Test Cases', async() => {
