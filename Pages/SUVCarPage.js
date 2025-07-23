@@ -10,13 +10,12 @@ exports.SUVCarPage =
             this.suvCheckbox = page.locator(".checkbox_checkbox__FA7_p");
             this.carNameSelector = page.getByTestId('CAB_TITLE');
             this.carPriceSelector = page.locator('.cabDetailsCard_price__SHN6W');
-            this.moreOption = page.locator('[data-cy="menu_More"]');
-            this.giftCardOption = page.locator('[data-cy="submenu_Giftcards"]');
+            this.pickupTime = page.locator('#pickup_time');
         }
 
         async suvCarSelection(){
             await this.page.waitForLoadState('load');
-            await this.page.waitForTimeout(1000);
+            await this.page.waitForTimeout(2000);
             await this.himachalPopupHandling();
             for(let i=1; i<4; i++){
                 let cabType = await this.cabTypeName.nth(i);
@@ -47,10 +46,12 @@ exports.SUVCarPage =
             for(const val of lowestCabs){
                 console.log(val.carName +" - "+val.carPrice);
             }
+            fs.writeFileSync("Outputs/CabResults.json",JSON.stringify({lowestCabs}, null, 2));
         }
 
-        async giftCardOptionSelection(){
-            await this.moreOption.hover();
-            await this.giftCardOption.click();
+        async pickupTimeInCarPage(){
+            await this.page.waitForLoadState('domcontentloaded')
+            await this.himachalPopupHandling();
+            return await this.pickupTime.getAttribute('value');
         }
     }

@@ -83,5 +83,4 @@ exports.CabsPage =
             await this.placesErrorImage.screenshot({path:"screenshots/PlacesError.png"});
             console.log("Error:",errorMessage); 
         }
- 
     }
