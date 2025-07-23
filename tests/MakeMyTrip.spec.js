@@ -1,6 +1,6 @@
 import { test, expect, chromium } from "@playwright/test"
 import { HomePage } from "../Pages/HomePage"
-import { CabsPage } from "../Pages/cabsPage"
+import { CabsPage } from "../Pages/CabsPage"
 import { SUVCarPage } from "../Pages/SUVCarPage";
 import { GiftCardPage } from "../Pages/GiftCardPage";
 import { HotelsPage } from "../Pages/HotelsPage";
