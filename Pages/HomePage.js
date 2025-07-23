@@ -1,6 +1,6 @@
 import {expect} from "@playwright/test"
 import { BasePage } from "./BasePage";
-import process from "../Inputs/mobileNumberInputValues.json";
+import process from "../Inputs/MobileNumberInputValues.json";
 
 exports.HomePage =
     class HomePage extends BasePage{
