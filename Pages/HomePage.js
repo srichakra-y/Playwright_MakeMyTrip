@@ -33,7 +33,7 @@ exports.HomePage =
             await this.page.goto("https://www.makemytrip.com/");
             await this.page.waitForLoadState('domcontentloaded');
             await expect(this.page).toHaveTitle("MakeMyTrip - #1 Travel Website 50% OFF on Hotels, Flights & Holiday");
-            await this.page.waitForTimeout(1000);
+            await this.page.waitForTimeout(2000);
             await this.loginHandling();
             await this.advertisementHandling();
         }

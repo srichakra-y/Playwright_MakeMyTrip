@@ -11,6 +11,8 @@ exports.SaudiPage =
         }
 
         async validatingIconsSaudi(){
+            await this.page.waitForTimeout(2000);
+            await this.saudiLoginPopupHandling();
             const headerIconsCountSaudi = await this.headerIconTextSaudi.count();
             for(let i = 0; i < headerIconsCountSaudi ; i++){
                 const headerIconSaudi = await this.headerIconSaudi.nth(i)
