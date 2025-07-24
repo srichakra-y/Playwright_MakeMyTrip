@@ -27,7 +27,7 @@ exports.CabsPage =
             await this.fromCity.click();
             await this.fromCitySearchBar.type(process.From);
             await this.page.waitForTimeout(1000);
-            await this.page.waitForSelector("//ul[@role='listbox']/li")
+            await this.page.waitForSelector("//ul[@role='listbox']/li");
             await this.fromCityOption.click();
         }
 
@@ -77,8 +77,9 @@ exports.CabsPage =
         async toCitySameAsFromCity(){   
             await this.toCitySearchBar.type(process.From);
             await this.page.waitForTimeout(1000);
-            await this.page.waitForSelector("//ul[@role='listbox']/li")
+            await this.page.waitForSelector("//ul[@role='listbox']/li");
             await this.toCityOption.click();
+            await this.page.waitForSelector(".redText.errorMsgText");
             const errorMessage=await this.placesErrorField.textContent();
             await this.placesErrorImage.screenshot({path:"screenshots/PlacesError.png"});
             console.log("Error:",errorMessage); 

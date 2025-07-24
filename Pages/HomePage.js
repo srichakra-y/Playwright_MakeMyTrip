@@ -84,7 +84,7 @@ exports.HomePage =
         async validatingIcons() {
             const headerIconsCount = await this.headerIconsText.count();
             for(let i = 0; i < headerIconsCount ; i++){
-                const headerIcon = this.headerIcons.nth(i)
+                const headerIcon = this.headerIcons.nth(i);
                 const headerIconText = this.headerIconsText.nth(i);
                 await expect(headerIcon).toBeVisible();
                 await expect(headerIcon).toBeEnabled();
