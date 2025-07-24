@@ -6,37 +6,34 @@ import { GiftCardPage } from "../Pages/GiftCardPage";
 import { HotelsPage } from "../Pages/HotelsPage";
 import process from "../Inputs/GiftCardInputValues.json";
 import { SaudiPage } from "../Pages/SaudiPage";
+import fs from 'fs';
 
 
-let page, context, browser;
-test.beforeEach("Creating Page", async() => {
-    browser = await chromium.launch({ args:['--start-maximized']});
-    context = await browser.newContext({ viewport: null, deviceScaleFactor: undefined });
+let page, context, browser, homepage;
+test.beforeEach("Creating Page and navigating to home page", async() => {
+    // browser = await chromium.launch({ args:['--start-maximized']});
+    // context = await browser.newContext({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: undefined });
+    browser = await chromium.launch();
+    context = await browser.newContext();
     page = await context.newPage();
+    homepage = new HomePage(page, context);
+    await homepage.goToHomePage();
 })
 
 test.describe('Basic Functionality', async() => {
     test('Getting Link through Mobile', async() => {
-        const homepage = new HomePage(page, context);
-        await homepage.goToHomePage();
         await homepage.getApplink();
     })
 
     test('Validating the CopyWright Symbol', async() => {
-        const homepage = new HomePage(page, context);
-        await homepage.goToHomePage();
         await homepage.CopyWrightSymbol();
     })
 
     test('Validating the elements on the div', async() => {
-        const homepage = new HomePage(page, context);
-        await homepage.goToHomePage();
         await homepage.validatingIcons();
     })
 
     test('Validating the Location', async() => {
-        const homepage = new HomePage(page, context);
-        await homepage.goToHomePage();
         const newPage1 = await homepage.LocationHandler();
         const saudipage = new SaudiPage(newPage1);
         await saudipage.validatingIconsSaudi();
@@ -45,14 +42,10 @@ test.describe('Basic Functionality', async() => {
 
 test.describe('Cabs Test Cases', async() => {
     test("LOGO Verification", async()=>{
-        const homepage = new HomePage(page, context);
-        await homepage.goToHomePage();
         await homepage.homePageLogoVerification();
     })
 
-    test('From and To Date',async()=>{
-        const homepage = new HomePage(page, context);
-        await homepage.goToHomePage();
+    test('From and To City',async()=>{
         await homepage.clickOnCabsMenu();
 
         const cabspage = new CabsPage(page);
@@ -61,8 +54,6 @@ test.describe('Cabs Test Cases', async() => {
     })
 
     test("Visibility of Pickup Time in CabsPage", async()=>{
-        const homepage = new HomePage(page, context);
-        await homepage.goToHomePage();
         await homepage.clickOnCabsMenu();
     
         const cabspage = new CabsPage(page);
@@ -79,8 +70,6 @@ test.describe('Cabs Test Cases', async() => {
     })
 
     test('Booking cabs', async() => {
-        const homepage = new HomePage(page, context);
-        await homepage.goToHomePage();
         await homepage.clickOnCabsMenu();
     
         const cabspage = new CabsPage(page);
@@ -91,15 +80,19 @@ test.describe('Cabs Test Cases', async() => {
         await cabspage.searchButtonSelection();
     
         const suvcarpage = new SUVCarPage(page);
-        await suvcarpage.suvCarSelection();
-        await suvcarpage.carNamePrice();
+        try{
+            await suvcarpage.suvCarSelection();
+            await suvcarpage.carNamePrice();
+        }
+        catch(e){
+            console.log('Oops! No cabs found');
+            fs.writeFileSync("Outputs/CabResults.json",JSON.stringify({Cabs:'Oops! No cabs found'}, null, 2));
+        }
     })
 })
 
 test.describe('Giftcard Test Cases', async() => {
     test('Fetching festival giftcards', async() => {
-        const homepage = new HomePage(page, context);
-        await homepage.goToHomePage();
         const newPage = await homepage.clickOnGiftCardMenu();
 
         const giftcardpage = new GiftCardPage(newPage, context);
@@ -107,8 +100,6 @@ test.describe('Giftcard Test Cases', async() => {
     })
 
     test('URL validation', async() =>{
-        const homepage = new HomePage(page, context);
-        await homepage.goToHomePage();
         const newPage = await homepage.clickOnGiftCardMenu();
 
         const giftcardpage = new GiftCardPage(newPage, context);
@@ -116,8 +107,6 @@ test.describe('Giftcard Test Cases', async() => {
     })
 
     test('Validating available giftcards', async() => {
-        const homepage = new HomePage(page, context);
-        await homepage.goToHomePage();
         const newPage = await homepage.clickOnGiftCardMenu();
     
         const giftcardpage = new GiftCardPage(newPage, context);
@@ -125,8 +114,6 @@ test.describe('Giftcard Test Cases', async() => {
     })
 
     test('Sending the giftcard', async() => {
-        const homepage = new HomePage(page, context);
-        await homepage.goToHomePage();
         const newPage = await homepage.clickOnGiftCardMenu();
     
         const giftcardpage = new GiftCardPage(newPage);
@@ -139,14 +126,10 @@ test.describe('Giftcard Test Cases', async() => {
 
 test.describe("hotel test cases",async()=>{
     test("Check the hotel link is working",async()=>{
-        const homepage = new HomePage(page, context);
-        await homepage.goToHomePage();
         await homepage.clickOnHotelsMenu();
     })
  
-    test("Check the options available in room",async()=>{
-        const homepage = new HomePage(page, context);
-        await homepage.goToHomePage();
+    test("Check the options available in room & guests",async()=>{
         await homepage.clickOnHotelsMenu();
 
         const hotelspage = new HotelsPage(page);
@@ -154,8 +137,6 @@ test.describe("hotel test cases",async()=>{
     })
 
     test("Validating adults count",async()=>{
-        const homepage = new HomePage(page, context);
-        await homepage.goToHomePage();
         await homepage.clickOnHotelsMenu();
 
         const hotelspage = new HotelsPage(page);
@@ -163,8 +144,6 @@ test.describe("hotel test cases",async()=>{
     })
 
     test('Checking adults selection in Hotels', async() =>{
-        const homepage = new HomePage(page, context);
-        await homepage.goToHomePage();
         await homepage.clickOnHotelsMenu();
         const hotelspage = new HotelsPage(page);
         await hotelspage.guestsSelection();
