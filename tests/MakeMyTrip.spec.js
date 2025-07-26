@@ -8,8 +8,10 @@ import process from "../Inputs/GiftCardInputValues.json";
 import { SaudiPage } from "../Pages/SaudiPage";
 import fs from 'fs';
 
-
+// Global variables to hold browser and page instances
 let page, context, browser, homepage;
+
+// Setup before each test
 test.beforeEach("Creating Page and navigating to home page", async() => {
     // browser = await chromium.launch({ args:['--start-maximized']});
     // context = await browser.newContext({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: undefined });
@@ -20,6 +22,7 @@ test.beforeEach("Creating Page and navigating to home page", async() => {
     await homepage.goToHomePage();
 })
 
+// Group: Basic functionality tests
 test.describe('Basic Functionality', async() => {
     test('Getting Link through Mobile', async() => {
         await homepage.getApplink();
@@ -40,6 +43,7 @@ test.describe('Basic Functionality', async() => {
     })
 })
 
+// Group: Cabs-related tests
 test.describe('Cabs Test Cases', async() => {
     test("LOGO Verification", async()=>{
         await homepage.homePageLogoVerification();
@@ -91,6 +95,7 @@ test.describe('Cabs Test Cases', async() => {
     })
 })
 
+// Group: Gift Card-related tests
 test.describe('Giftcard Test Cases', async() => {
     test('Fetching festival giftcards', async() => {
         const newPage = await homepage.clickOnGiftCardMenu();
@@ -124,6 +129,7 @@ test.describe('Giftcard Test Cases', async() => {
     })
 })
 
+// Group: Hotel-related tests
 test.describe("hotel test cases",async()=>{
     test("Check the hotel link is working",async()=>{
         await homepage.clickOnHotelsMenu();

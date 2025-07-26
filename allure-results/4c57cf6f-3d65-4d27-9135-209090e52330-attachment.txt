@@ -1,9 +1,0 @@
-[
-  'Eid Mubarak Gift Card',
-  'Onam Gift Card',
-  'Christmas Gift Card',
-  'Karvachauth Gift Card',
-  'Happy New Year Gift Card',
-  'Bhaidoojh Gift Card',
-  'Diwali Gift Card'
-]
