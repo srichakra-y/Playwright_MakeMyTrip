@@ -1,1 +1,0 @@
-Error:  The Origin City & Destination City cannot be the same. 
